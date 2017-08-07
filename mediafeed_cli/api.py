@@ -24,3 +24,33 @@ class Server(object):
     def get_module(self, id):
         request_url = self._make_url('modules/%s' % id)
         return requests.get(request_url).json()
+
+    def list_groups(self, root_id=None, recursive=True):
+        query = (
+            ('root_id', root_id),
+            ('recursive', recursive),
+        )
+        request_url = self._make_url('groups', query)
+        return requests.get(request_url).json()['groups']
+
+    def get_group(self, id):
+        request_url = self._make_url('groups/%s' % id)
+        return requests.get(request_url).json()
+
+    def add_group(self, name, parent_id=None):
+        request_url = self._make_url('groups')
+        return requests.post(request_url, json={
+            'name': name,
+            'parent_id': parent_id,
+        }).json()
+
+    def edit_group(self, id, parent_id=0, name=None):
+        request_url = self._make_url('groups/%s' % id)
+        return requests.post(request_url, json={
+            'parent_id': parent_id,
+            'name': name,
+        }).json()
+
+    def remove_group(self, id):
+        request_url = self._make_url('groups/%s' % id)
+        return requests.delete(request_url).json()
