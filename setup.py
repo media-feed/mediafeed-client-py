@@ -23,4 +23,10 @@ setup(
     long_description=long_description,
     license='MIT',
     url='https://github.com/eduardoklosowski/mediafeed-cli',
+
+    entry_points={
+        'console_scripts': [
+            'mediafeed = mediafeed_cli:main',
+        ],
+    },
 )
