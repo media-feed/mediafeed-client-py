@@ -55,3 +55,58 @@ def print_group(group):
         headers=['Field', 'Value'],
         tablefmt='psql',
     ))
+
+
+def print_source_metadata(source_metadata):
+    print(tabulate(
+        [
+            ('id', source_metadata['id']),
+            ('url', source_metadata['url']),
+            ('options', source_metadata.get('options')),
+            ('name', source_metadata['name']),
+            ('thumbnail_url', source_metadata.get('thumbnail_url')),
+            ('web_url', source_metadata.get('web_url')),
+        ],
+        headers=['Field', 'Value'],
+        tablefmt='psql',
+    ))
+
+
+def print_sources(sources):
+    print(tabulate(
+        [[
+            source['module_id'],
+            source['id'],
+            source['group_path_name'],
+            source['name'],
+            source['web_url'],
+            source['last_success_update'],
+            source['error'],
+        ] for source in sources],
+        headers=['Module Id', 'Id', 'Group', 'Name', 'Web URL', 'Update', 'Error'],
+        tablefmt='psql',
+    ))
+
+
+def print_source(source):
+    print(tabulate(
+        [
+            ('module_id', source['module_id']),
+            ('id', source['id']),
+            ('group_id', source['group_id']),
+            ('group_path_name', source['group_path_name']),
+            ('url', source['url']),
+            ('options', source['options']),
+            ('name', source['name']),
+            ('thumbnail_url', source['thumbnail_url']),
+            ('web_url', source['web_url']),
+            ('auto_download_media', source['auto_download_media']),
+            ('persist_thumbnails', source['persist_thumbnails']),
+            ('last_success_update', source['last_success_update']),
+            ('last_success_update_timestamp', source['last_success_update_timestamp']),
+            ('error', source['error']),
+            ('items', len(source['items_id'])),
+        ],
+        headers=['Field', 'Value'],
+        tablefmt='psql',
+    ))
