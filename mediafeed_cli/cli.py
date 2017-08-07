@@ -129,3 +129,44 @@ parser_source_update.add_argument('module_id')
 parser_source_update.add_argument('id')
 parser_source_update.add_argument('--viewed', action='store_true', default=False)
 parser_source_update.add_argument('--no-viewed', action='store_false', dest='viewed')
+
+
+# Item
+
+parser_item = subparsers.add_parser('item')
+parser_item_subparsers = parser_item.add_subparsers(dest='command')
+
+
+parser_item_list = parser_item_subparsers.add_parser('list')
+parser_item_list.add_argument('-g', '--groups-id', type=int, action='append', default=[])
+parser_item_list.add_argument('-r', '--recursive', action='store_true', default=False)
+parser_item_list.add_argument('--no-recursive', action='store_false', dest='recursive')
+parser_item_list.add_argument('-s', '--sources_id', action='append', default=[])
+parser_item_list.add_argument('-v', '--viewed', action='store_true', default=None)
+parser_item_list.add_argument('-n', '--no-viewed', action='store_false', dest='viewed')
+parser_item_list.add_argument('-m', '--media', action='store_true', default=None)
+parser_item_list.add_argument('--no-media', action='store_false', dest='media')
+
+
+parser_item_show = parser_item_subparsers.add_parser('show')
+parser_item_show.add_argument('module_id')
+parser_item_show.add_argument('id')
+
+
+parser_item_edit = parser_item_subparsers.add_parser('edit')
+parser_item_edit.add_argument('module_id')
+parser_item_edit.add_argument('id')
+parser_item_edit.add_argument('-v', '--viewed', action='store_true', default=None)
+parser_item_edit.add_argument('-n', '--no-viewed', action='store_false', dest='viewed')
+
+
+parser_item_download = parser_item_subparsers.add_parser('download')
+parser_item_download.add_argument('module_id')
+parser_item_download.add_argument('id')
+parser_item_download.add_argument('-o', '--options')
+
+
+parser_item_remove_media = parser_item_subparsers.add_parser('remove-media')
+parser_item_remove_media.add_argument('module_id')
+parser_item_remove_media.add_argument('id')
+parser_item_remove_media.add_argument('-f', '--filename')

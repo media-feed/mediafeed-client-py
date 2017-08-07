@@ -114,3 +114,38 @@ class Server(object):
         return requests.post(request_url, json={
             'viewed': viewed,
         }).json()
+
+    def list_items(self, groups_id=[], recursive=False, sources_id=[], viewed=None, media=None):
+        query = [
+            ('recursive', recursive),
+            ('viewed', viewed),
+            ('media', media),
+        ]
+        for group_id in groups_id:
+            query.append(('groups_id', group_id))
+        for source_id in sources_id:
+            query.append(('sources_id', source_id))
+        request_url = self._make_url('items', query)
+        return requests.get(request_url).json()['items']
+
+    def get_item(self, module_id, id):
+        request_url = self._make_url('items/%s/%s' % (module_id, id))
+        return requests.get(request_url).json()
+
+    def edit_item(self, module_id, id, viewed=None):
+        request_url = self._make_url('items/%s/%s' % (module_id, id))
+        return requests.post(request_url, json={
+            'viewed': viewed,
+        }).json()
+
+    def download_media(self, module_id, id, options=None):
+        request_url = self._make_url('item/%s/%s/media' % (module_id, id))
+        return requests.post(request_url, json={
+            'options': options,
+        }).json()
+
+    def remove_media(self, module_id, id, filename=None):
+        request_url = self._make_url('item/%s/%s/media' % (module_id, id))
+        return requests.delete(request_url, json={
+            'filename': filename,
+        }).json()

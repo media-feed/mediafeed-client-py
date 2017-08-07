@@ -56,5 +56,21 @@ def main():
             api.update_source(args.module_id, args.id, viewed=args.viewed)
         else:
             cli.parser_source.print_usage()
+    elif args.group_command == 'item':
+        if args.command == 'list':
+            items = api.list_items(groups_id=args.groups_id, recursive=args.recursive, sources_id=args.sources_id, viewed=args.viewed, media=args.media)
+            prints.print_items(items)
+        elif args.command == 'show':
+            item = api.get_item(args.module_id, args.id)
+            prints.print_item(item)
+        elif args.command == 'edit':
+            item = api.edit_item(args.module_id, args.id, viewed=args.viewed)
+            prints.print_item(item)
+        elif args.command == 'download':
+            api.download_media(args.module_id, args.id, options=args.options)
+        elif args.command == 'remove-media':
+            item = api.remove_media(args.module_id, args.id, filename=args.filename)
+        else:
+            cli.parser_item.print_usage()
     else:
         cli.parser.print_usage()

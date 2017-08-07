@@ -110,3 +110,48 @@ def print_source(source):
         headers=['Field', 'Value'],
         tablefmt='psql',
     ))
+
+
+def print_items(items):
+    print(tabulate(
+        [[
+            item['module_id'],
+            item['id'],
+            ', '.join(item['sources_id']),
+            item['name'],
+            item['datetime'],
+            item['viewed'],
+            len(item['medias']),
+        ] for item in items],
+        headers=['Module Id', 'Id', 'Source', 'Name', 'Date', 'Viewed', 'Media'],
+        tablefmt='psql',
+    ))
+
+
+def print_item(item):
+    print(tabulate(
+        [
+            ('module_id', item['module_id']),
+            ('id', item['id']),
+            ('sources_id', ', '.join(item['sources_id'])),
+            ('url', item['url']),
+            ('datetime', item['datetime']),
+            ('timestamp', item['timestamp']),
+            ('name', item['name']),
+            ('thumbnail_url', item['thumbnail_url']),
+            ('media_url', item['media_url']),
+            ('viewed', item['viewed']),
+        ],
+        headers=['Field', 'Value'],
+        tablefmt='psql',
+    ))
+    if item['medias']:
+        print('Medias:')
+        for media in item['medias']:
+            print('  %s' % media)
+    if item['text']:
+        if item['medias']:
+            print()
+            print('--------------------------------------------------------------------------------')
+        print()
+        print(item['text'])
